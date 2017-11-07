@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load blog_extras %}
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h3>{{ object.title }}</h3>
+        <h6>{{ object.posted_datetime|date:'Y-m-d H:i' }}</h6>
+        <div class="s12">
+            {% tag_list object %}
+        </div>
+        <div class="s12">
+            {{ object.content | safe }}
+        </div>
+    </div>
+
+    <div class="row">
+        <h5>Комментарии</h5>
+        <div class="s12">
+            <ul class='collection' id="post_comment_list">
+                {% for elem in object.comments.all %}
+                    <li class="collection-item">
+                        {{ elem.text }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <label for="textarea1">Введите комментарий</label>
+        </div>
+        <div>
+            <button class="btn waves-effect waves-light" id="button_send_comment" >Отправить комментарий
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        $.ajaxSetup({
+            headers:{
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        });
+
+        var button = $('#button_send_comment');
+        var textarea = $('#textarea1');
+        var ul = $('#post_comment_list');
+        button.click(function(event){
+            button.addClass('disabled');
+            $.post("{% url 'comment-api' %}", {text: textarea.val(), post_id: {{ object.id }}}).done(function(data) {
+                    ul.append('<li class="collection-item">'+textarea.val()+'</li>');
+                    textarea.val('');
+                    setTimeout(function() {button.removeClass('disabled')}, 2000);
+                }
+            ).fail(function(error) {
+                button.removeClass('disabled');
+            });
+        })
+    </script>
+{% endblock %}

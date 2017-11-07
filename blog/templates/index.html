@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load blog_extras %}
+{% block title %}Мой чудесный блог{% endblock %}
+
+{% block content %}
+    <ul class="collection">
+        {% for post in posts %}
+            <li class="collection-item"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a> {{ post.short }}
+               {% tag_list post %}
+            </li>
+        {% empty %}
+            Новостей нет
+        {% endfor %}
+    </ul>
+
+{% endblock %}

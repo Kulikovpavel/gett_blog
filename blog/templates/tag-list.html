@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load blog_extras %}
+{% block title %}Категории - Мой чудесный блог{% endblock %}
+
+{% block content %}
+    <ul class="collection">
+        {% for tag in object_list %}
+            <li class="collection-item"><a href="/?tag={{ tag.id }}">{{ tag.title }}</a>
+            </li>
+        {% empty %}
+            Категорий нет
+        {% endfor %}
+    </ul>
+{% endblock %}
