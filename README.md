@@ -3,10 +3,10 @@
 # Installation
 
 ```
-docker-compose run web makemigrations
-docker-compose run web migrate
-docker-compose run web collectstatic --noinput
-docker-compose run web createsuperuser
+docker-compose run web python manage.py makemigrations
+docker-compose run web python manage.py migrate
+docker-compose run web python manage.py collectstatic --noinput
+docker-compose run web python manage.py createsuperuser
 ```
 
 ## Run
