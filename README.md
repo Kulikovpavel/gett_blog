@@ -16,5 +16,6 @@ docker-compose up
 ```
 
 ### Links
-[Site](http://127.0.0.1:8001)
-[Admin](http://127.0.0.1:8001/admin)
+
+- [Site](http://127.0.0.1:8001)
+- [Admin](http://127.0.0.1:8001/admin)
